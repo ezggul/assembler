@@ -1,0 +1,22 @@
+COPY    START   1000
+FIRST   STL     RETADR
+        LDB     #LENGTH
+        BASE    LENGTH
+        +JSUB   RDREC
+        LDA     LENGTH
+        COMP    ZERO
+        JEQ     ENDFIL
+        JSUB    WRREC
+        J       FIRST
+ZERO    EQU     0
+        ORG     1036
+BUFEND  RESB    1
+RETADR  RESW    1
+LENGTH  RESW    1
+RDREC   BYTE    C'EOF'
+WRREC   RESW    1
+ENDFIL  BYTE    X'F1'
+        LTORG
+        LDA     =X'05'
+        +JSUB   =C'EOF'
+        END     FIRST
